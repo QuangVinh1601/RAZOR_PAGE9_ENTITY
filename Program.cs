@@ -21,6 +21,6 @@ namespace RAZOR_PAGE9_ENTITY
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
     }
 }
