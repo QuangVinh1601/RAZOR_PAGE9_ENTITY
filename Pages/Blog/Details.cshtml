@@ -1,0 +1,17 @@
+﻿@page "/xemblogchitiet/{id:int}"
+@model RAZOR_PAGE9_ENTITY.Pages_Blog.DetailsModel
+
+@{
+    ViewData["Title"] = Model.Article.Title;
+}
+
+<h1>@Model.Article.Title</h1>
+<p><i>@Html.DisplayFor(model => model.Article.Created)</i></p>
+<hr />
+<p>@Html.Raw(Model.Article.Content)</p>
+<hr />
+
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Article.Id">Chỉnh sửa</a> |
+    <a asp-page="./Index">Quay lại danh sách</a>
+</div>
