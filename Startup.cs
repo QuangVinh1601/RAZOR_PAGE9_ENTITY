@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
@@ -52,6 +52,7 @@ namespace RAZOR_PAGE9_ENTITY
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -63,3 +64,8 @@ namespace RAZOR_PAGE9_ENTITY
 }
 // CREATE,READ, UPDATE, DELETE (CRUD)
 //dotnet aspnet-codegenerator razorpage -m RAZOR_PAGE9_ENTITY.Models.Article -dc RAZOR_PAGE9_ENTITY.Models.MyBlogContext -outDir Pages/Blog -udl --referenceScriptLibraries
+
+//IDENTITY
+// Athentication: Xác định danh tính -> Login , logout
+// Authorization: Xác định quyền truy cập  
+// Quản lý user : Sign Up, User, Role
