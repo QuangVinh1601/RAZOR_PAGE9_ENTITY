@@ -1,9 +1,9 @@
-using Microsoft.AspNetCore.Identity
+using Microsoft.AspNetCore.Identity;
 
-namespace RAZOR_PAGE9_ENTITY.Models
+namespace RAZOR_PAGE9_ENTITY
 {
-	public class AppUser: IdentityUser
+	public class AppUser : IdentityUser
 	{
-
+		public string Name { get; set; }
 	}
 }
