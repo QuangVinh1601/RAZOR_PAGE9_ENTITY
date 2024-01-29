@@ -72,9 +72,6 @@ namespace RAZOR_PAGE9_ENTITY.Pages_Blog
         {
             return _context.articles.Any(e => e.Id == id);
         }
-        public void TruyXuat()
-        {
 
-        }
     }
 }
