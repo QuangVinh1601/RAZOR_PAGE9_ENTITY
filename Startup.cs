@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +32,10 @@ namespace RAZOR_PAGE9_ENTITY
                 string connectionString = Configuration.GetConnectionString("MyBlogContext");
                 options.UseSqlServer(connectionString);
             });
+            //Dang ky Identity
+            services.AddIdentity<AppUser, IdentityRole>()
+                    .AddEntityFrameworkStores<MyBlogContext>()
+                    .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

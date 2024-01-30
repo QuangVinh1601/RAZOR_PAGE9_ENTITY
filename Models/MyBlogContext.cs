@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace RAZOR_PAGE9_ENTITY.Models
 {
-    public class MyBlogContext : DbContext
+    public class MyBlogContext : IdentityDbContext<AppUser>
     {
         public DbSet<Article> articles { set; get; }
         public MyBlogContext(DbContextOptions<MyBlogContext> options) : base(options)
