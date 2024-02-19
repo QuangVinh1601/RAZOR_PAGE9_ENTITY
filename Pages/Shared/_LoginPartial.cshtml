@@ -1,0 +1,31 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@using RAZOR_PAGE9_ENTITY.Models;
+@inject SignInManager<AppUser> signInManager;
+@inject UserManager<AppUser> userManager;
+
+
+@if (signInManager.IsSignedIn(User))
+{
+    <ul class="navbar - nav">
+        <li>
+            <a class="nav-link text-dark"asp-area="Identity" asp-page="/Account/Manage/Index">Xin chao @userManager.GetUserName(User)</a>
+        </li>
+        <li>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/logout">Đăng xuất</a>
+        </li>
+    </ul>
+} 
+else
+{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Đăng ký</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Đăng nhập</a>
+        </li>
+
+    </ul>
+    
+}
+

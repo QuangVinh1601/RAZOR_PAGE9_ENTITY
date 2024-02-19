@@ -17,6 +17,14 @@ namespace RAZOR_PAGE9_ENTITY.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                var tablename = entityType.GetTableName();
+                if (tablename.StartsWith("AspNet"))
+                {
+                    entityType.SetTableName(tablename.Substring(6));
+                }
+            }
         }
 
     }
