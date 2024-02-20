@@ -2,11 +2,13 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RAZOR_PAGE9_ENTITY.Models;
+using RAZOR_PAGE9_ENTITY.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,7 +67,11 @@ namespace RAZOR_PAGE9_ENTITY
                 options.SignIn.RequireConfirmedEmail = true;            // Cấu hình xác thực địa chỉ email (email phải tồn tại)
                 options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
             });
-            }
+            services.AddOptions();
+            var mailSetting = Configuration.GetSection("MailSettings");
+            services.Configure<MailSetting>(mailSetting);
+            services.AddTransient<IEmailSender, SendMailService>();
+        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -92,6 +98,7 @@ namespace RAZOR_PAGE9_ENTITY
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapGet()
             });
         }
     }
