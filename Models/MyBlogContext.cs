@@ -29,3 +29,4 @@ namespace RAZOR_PAGE9_ENTITY.Models
 
     }
 }
+//dotnet aspnet-codegenerator identity -dc RAZOR_PAGE9_ENTITY.Models.MyBlogContext

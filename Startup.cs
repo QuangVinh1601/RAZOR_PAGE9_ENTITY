@@ -35,13 +35,13 @@ namespace RAZOR_PAGE9_ENTITY
                 options.UseSqlServer(connectionString);
             });
             //Dang ky Identity
-            //services.AddIdentity<AppUser, IdentityRole>()
-            //        .AddEntityFrameworkStores<MyBlogContext>()
-            //        .AddDefaultTokenProviders();
+            services.AddIdentity<AppUser, IdentityRole>()
+                    .AddEntityFrameworkStores<MyBlogContext>()
+                    .AddDefaultTokenProviders();
 
-            services.AddDefaultIdentity<AppUser>() //them dich vu Identity vs cau hinh mac dinh cho AppUserModel
-                    .AddEntityFrameworkStores<MyBlogContext>() //Them EF de luu tru thong tin User
-                    .AddDefaultTokenProviders(); // them Token: Reset password, confirm email,..
+            //services.AddDefaultIdentity<AppUser>() //them dich vu Identity vs cau hinh mac dinh cho AppUserModel
+            //        .AddEntityFrameworkStores<MyBlogContext>() //Them EF de luu tru thong tin User
+            //        .AddDefaultTokenProviders(); // them Token: Reset password, confirm email,..
             // Truy cập IdentityOptions
             services.Configure<IdentityOptions>(options =>
             {
