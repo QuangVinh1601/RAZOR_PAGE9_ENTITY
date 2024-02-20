@@ -98,7 +98,7 @@ namespace RAZOR_PAGE9_ENTITY
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapGet()
+               
             });
         }
     }
