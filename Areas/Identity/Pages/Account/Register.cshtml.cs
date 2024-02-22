@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -46,21 +46,27 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage ="Phải nhập Email")]
+            [EmailAddress(ErrorMessage ="Sai định dạng Email")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage ="Phải nhập mật khẩu")]
+            [StringLength(100, ErrorMessage = "{0} phải dài từ {2} đến {1}", MinimumLength = 2)]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Mật khẩu")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Nhập lại mật khẩu")]
+            [Compare("Password", ErrorMessage = "Mật khẩu nhập lại không phù hợp.")]
             public string ConfirmPassword { get; set; }
+
+            [DataType(DataType.Text)]
+            [Required(ErrorMessage ="Phải nhập {0}")]
+            [StringLength(30, ErrorMessage ="{0} phải dài từ {2} đến {1} ký tự", MinimumLength = 5)]
+            [Display(Name ="Tên tài khoản")]
+            public string UserName { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -75,22 +81,26 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new AppUser { UserName = Input.Email, Email = Input.Email };
+                var user = new AppUser { UserName = Input.UserName, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
                 if (result.Succeeded)
                 {
-                    _logger.LogInformation("User created a new account with password.");
-
+                    _logger.LogInformation("Đã tạo tài khoản thành công");
+                    // Phát sinh token để xác thực email
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    // Encode token để đính kèm trên địa chỉ Url
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    //https://localhost:5001/confirm-email?userId=hdfth5&code=thdthdhg@returnUrl=
                     var callbackUrl = Url.Page(
                         "/Account/ConfirmEmail",
                         pageHandler: null,
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email,
+                        "Xác thực email",
+                        $"Bạn đã đăng ký tài khoản trên Razor Web, vui lòng <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>bấm vào đây</a> để xác thực email!.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {

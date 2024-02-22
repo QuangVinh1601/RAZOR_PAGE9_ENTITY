@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using RAZOR_PAGE9_ENTITY.Models;
 
 namespace RAZOR_PAGE9_ENTITY.Pages_Blog
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly RAZOR_PAGE9_ENTITY.Models.MyBlogContext _context;

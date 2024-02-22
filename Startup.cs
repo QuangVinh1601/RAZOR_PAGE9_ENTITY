@@ -66,11 +66,18 @@ namespace RAZOR_PAGE9_ENTITY
                 // Cấu hình đăng nhập.
                 options.SignIn.RequireConfirmedEmail = true;            // Cấu hình xác thực địa chỉ email (email phải tồn tại)
                 options.SignIn.RequireConfirmedPhoneNumber = false;     // Xác thực số điện thoại
+                options.SignIn.RequireConfirmedAccount = true;
             });
             services.AddOptions();
             var mailSetting = Configuration.GetSection("MailSettings");
             services.Configure<MailSetting>(mailSetting);
             services.AddTransient<IEmailSender, SendMailService>();
+            services.ConfigureApplicationCookie((options) =>
+            {
+                options.LoginPath = "/login/";
+                options.LogoutPath = "/logout/";
+                options.AccessDeniedPath = "/khongduoctruycap.html";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
