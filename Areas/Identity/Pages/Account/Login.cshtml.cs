@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -43,15 +43,16 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-            public string Email { get; set; }
+            [Required(ErrorMessage ="Bắt buộc nhập {0}")]
+            [Display(Name ="Tên người dùng hoặc Địa chỉ Email")]
+            public string UserNameOrEmail { get; set; }
 
-            [Required]
+            [Required(ErrorMessage ="Bắt buộc nhập mật khẩu")]
             [DataType(DataType.Password)]
+            [Display(Name ="Mật khẩu")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Ghi nhớ thông tin đăng nhập?")]
             public bool RememberMe { get; set; }
         }
 
@@ -82,7 +83,18 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.UserNameOrEmail, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                //Find username by email, sign in again.
+                if (!result.Succeeded)
+                {
+                   AppUser user =  await _userManager.FindByEmailAsync(Input.UserNameOrEmail);
+                   if(user != null)
+                    {
+                        var username = user.UserName;
+                        await _signInManager.PasswordSignInAsync(username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                    }                
+                }
+                
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -99,7 +111,7 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Đăng nhập thất bại, sai username hoặc password");
                     return Page();
                 }
             }
