@@ -83,15 +83,15 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.UserNameOrEmail, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(Input.UserNameOrEmail, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 //Find username by email, sign in again.
                 if (!result.Succeeded)
                 {
                    AppUser user =  await _userManager.FindByEmailAsync(Input.UserNameOrEmail);
                    if(user != null)
                     {
-                        var username = user.UserName;
-                        await _signInManager.PasswordSignInAsync(username, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                       result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                    
                     }                
                 }
                 
@@ -106,7 +106,7 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account
                 }
                 if (result.IsLockedOut)
                 {
-                    _logger.LogWarning("User account locked out.");
+                    _logger.LogWarning("Tài khoản đã bị khóa");
                     return RedirectToPage("./Lockout");
                 }
                 else
