@@ -72,7 +72,14 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+
+            // Lấy các Provider (dịch vụ ngoài)
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            // Hiển thị tên các Provider
+            foreach(var providers in ExternalLogins)
+            {
+                _logger.LogInformation(providers.Name);
+            }
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)

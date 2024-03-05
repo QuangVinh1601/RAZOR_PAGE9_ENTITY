@@ -70,6 +70,7 @@ namespace RAZOR_PAGE9_ENTITY
             });
             services.AddOptions();
             var mailSetting = Configuration.GetSection("MailSettings");
+            //Tạo lớp Configure cho ứng dụng
             services.Configure<MailSetting>(mailSetting);
             services.AddTransient<IEmailSender, SendMailService>();
             services.ConfigureApplicationCookie((options) =>
@@ -78,6 +79,24 @@ namespace RAZOR_PAGE9_ENTITY
                 options.LogoutPath = "/logout/";
                 options.AccessDeniedPath = "/khongduoctruycap.html";
             });
+
+            //Thêm dịch vụ xác thực bằng Google 
+
+            services.AddAuthentication().
+                     AddGoogle((options) =>
+                     {
+                         var gconfigure = Configuration.GetSection("Application:Google");
+                         options.ClientId = gconfigure["ClientId"];
+                         options.ClientSecret = gconfigure["ClientSecret"];
+                         options.CallbackPath = "/dang-nhap-bang-google";
+                     })
+                    .AddFacebook((options) =>
+                    {
+                        var config = Configuration.GetSection("Application:Facebook");
+                        options.AppId = config["AppId"];
+                        options.AppSecret = config["AppSecret"];
+                        options.CallbackPath = "/dang-nhap-bang-facebook";
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
