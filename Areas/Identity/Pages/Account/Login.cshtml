@@ -71,7 +71,14 @@
                             <p>
                                 @foreach (var provider in Model.ExternalLogins)
                                 {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Sử dụng tài khoản @provider.DisplayName">@provider.DisplayName</button>
+                                    if(provider.DisplayName.StartsWith("Google"))
+                                    {
+                                        <button type="submit" class="btn btn-danger" name="provider" value="@provider.Name" title="Sử dụng tài khoản @provider.DisplayName">@provider.DisplayName</button>
+                                    }
+                                    else
+                                    {
+                                        <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Sử dụng tài khoản @provider.DisplayName">@provider.DisplayName</button>
+                                    }
                                 }
                             </p>
                         </div>

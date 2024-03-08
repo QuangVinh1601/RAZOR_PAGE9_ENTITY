@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -36,18 +36,19 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Current password")]
+            [Display(Name = "Mật khẩu hiện tại")]
             public string OldPassword { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-            [DataType(DataType.Password)]
-            [Display(Name = "New password")]
+            [DataType (DataType.Password)]
+            [Display(Name ="Mật khẩu mới")]
+            [StringLength(200, ErrorMessage ="{0} phải dài từ {2} đến {1} ký tự", MinimumLength =6)]
             public string NewPassword { get; set; }
 
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm new password")]
-            [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+            [Required]
+            [Display(Name ="Nhập lại mật khẩu")]
+            [Compare("NewPassword", ErrorMessage ="Mật khẩu nhập lại không trùng với mật khẩu mới")]
             public string ConfirmPassword { get; set; }
         }
 

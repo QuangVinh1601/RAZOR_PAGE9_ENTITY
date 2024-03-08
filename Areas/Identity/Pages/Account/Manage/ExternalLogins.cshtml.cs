@@ -66,6 +66,7 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account.Manage
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "The external login was removed.";
             return RedirectToPage();
+            
         }
 
         public async Task<IActionResult> OnPostLinkLoginAsync(string provider)

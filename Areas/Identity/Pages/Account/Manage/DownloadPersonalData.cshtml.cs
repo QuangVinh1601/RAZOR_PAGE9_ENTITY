@@ -44,7 +44,7 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account.Manage
                 personalData.Add(p.Name, p.GetValue(user)?.ToString() ?? "null");
             }
 
-            var logins = await _userManager.GetLoginsAsync(user);
+            var logins = await _userManager.GetLoginsAsync(user); // lay thong tin dang nhap tu dich vu ngoai
             foreach (var l in logins)
             {
                 personalData.Add($"{l.LoginProvider} external login provider key", l.ProviderKey);

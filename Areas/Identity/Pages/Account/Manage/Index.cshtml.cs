@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -33,9 +33,17 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Phone]
-            [Display(Name = "Phone number")]
+            [Phone(ErrorMessage ="{0} sai định dạng")]
+            [Display(Name = "Số điện thoại")]
             public string PhoneNumber { get; set; }
+
+            [StringLength(400)]
+            [Display(Name ="Địa chỉ")]
+            public string HomeAddress { get; set; }
+
+            
+            [Display(Name ="Ngày sinh")]
+            public DateTime? Birthday { get; set; }
         }
 
         private async Task LoadAsync(AppUser user)
@@ -47,7 +55,9 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                HomeAddress = user.HomeAddress,
+                Birthday = user.Birthday
             };
         }
 
@@ -71,23 +81,16 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) // du lieu nguoi dung nhap vao khong hop le, va trang web tra lai thong tin (nguoi dung truoc) khi cap nhat
             {
                 await LoadAsync(user);
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
-            }
-
+            user.HomeAddress = Input.HomeAddress;
+            user.Birthday = Input.Birthday;
+            user.PhoneNumber = Input.PhoneNumber;
+            await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
