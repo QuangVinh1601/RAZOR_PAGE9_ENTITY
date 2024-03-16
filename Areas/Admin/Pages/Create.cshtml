@@ -1,0 +1,30 @@
+﻿@page "admin/addusers"
+@model RAZOR_PAGE9_ENTITY.Areas.Admin.Pages.CreateModel
+@{
+    ViewData["Title"] = "Tạo mới Role";
+}
+<h2>@ViewData["Title"]</h2>
+<partial name="_StatusMessage" model="@Model.StatusMessage"></partial>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Name"></label>
+                <input asp-for="Input.Name" class="form-control" />
+                <span asp-validation-for="Input.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Tạo mới" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

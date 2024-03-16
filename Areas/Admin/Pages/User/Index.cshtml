@@ -1,0 +1,44 @@
+﻿@page "/admin/members"
+@model RAZOR_PAGE9_ENTITY.Areas.Admin.Pages.User.IndexModel
+@{
+    ViewData["title"] = "Danh sách các thành viên";
+}
+<h2>@ViewData["title"]</h2>
+<partial name="_StatusMessage" model="Model.StatusMessage"></partial>
+<p>Tổng số User: @Model.totalUser</p>
+<table class="table">
+    <tr>
+        <th>Tên User</th>
+        <th>Vai trò(Role)</th>
+        <th>Tác vụ</th>
+    </tr>
+    @foreach (var user in Model.Users)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            <td>
+                @if (String.IsNullOrEmpty(user.RoleNames))
+                {
+                    <a class="text-dark" asp-page="./AddRole" asp-route-userid="@user.Id">+Thêm Role</a>
+                }
+                else
+                {
+                    <a class="text-dark" asp-page="./AddRole" asp-route-userid="@user.Id">@user.RoleNames</a>
+                }
+
+            </td>
+            <td>
+                <a class="btn btn-success" asp-page="./SetPassword" asp-route-userid="@user.Id">Cập nhật mật khẩu</a>
+            </td>
+        </tr>
+    }
+</table>
+@{
+    var datapaging = new RAZOR_PAGE9_ENTITY.Helpers.Pagingmodel()
+            {
+                currentpage = Model.currentPage,
+                countpages = Model.countPages,
+                generateUrl = (int? p) => @Url.Page("./Index", new { page = p })
+            };
+}    
+<partial name="_PagingXTL" model="@datapaging" />

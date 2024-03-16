@@ -73,12 +73,16 @@ namespace RAZOR_PAGE9_ENTITY
             //Tạo lớp Configure cho ứng dụng
             services.Configure<MailSetting>(mailSetting);
             services.AddTransient<IEmailSender, SendMailService>();
+            // Lấy ra lớp AppIdentityErrorDecriber chuyên hiển thị lỗi của ModelState
+            services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
             services.ConfigureApplicationCookie((options) =>
             {
                 options.LoginPath = "/login/";
                 options.LogoutPath = "/logout/";
                 options.AccessDeniedPath = "/khongduoctruycap.html";
             });
+
+            //services.Configure<SecurityStampValidatorOptions>(option => option.ValidationInterval = TimeSpan.FromSeconds(20));
 
             //Thêm dịch vụ xác thực bằng Google 
 
@@ -135,4 +139,5 @@ namespace RAZOR_PAGE9_ENTITY
 //IDENTITY
 // Athentication: Xác định danh tính -> Login , logout
 // Authorization: Xác định quyền truy cập  
+   //Role-based authorization
 // Quản lý user : Sign Up, User, Role
