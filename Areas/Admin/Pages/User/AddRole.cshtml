@@ -1,5 +1,5 @@
 ﻿@page "admin/assign-role-member/{userid}"
-@model AddRoleModel
+@model RAZOR_PAGE9_ENTITY.Areas.Admin.Pages.User.AddRoleModel
 @{
     ViewData["Title"] = "Gán role cho người dùng";
 }
@@ -21,18 +21,31 @@
             <button type="submit" class="btn btn-primary">Cập nhật</button>
             <a asp-page="./Index" class="btn btn-primary">Danh sách thành viên</a>
         </form>
+        <hr />
+        <p>Các claim của User:</p>
+        @if(Model.RoleClaims.Count>0)
+        {
+            <ul>
+                @foreach (var claim in Model.RoleClaims)
+                {
+                    <li>@claim.ClaimType: @claim.ClaimValue</li>
+                }
+            </ul>
+        }
+        <p>Các Claim riêng của User: <a asp-page-handler="AddClaim" asp-page="./AddUserClaim" asp-route-userid ="@Model.user.Id" >+ Thêm Claim</a></p>
+        @if(Model.UserClaims.Count > 0)
+        {
+            <ul>
+                @foreach (var claim in Model.UserClaims)
+                {
+                    <li><a asp-page="./AddUserClaim" asp-page-handler="EditClaim" asp-route-claimid="@claim.Id">@claim.ClaimType: @claim.ClaimValue</a></li>
+                }
+            </ul>
+        }
     </div>
 </div>
 
 @section Scripts {
-    <script src="~/lib/multiple-select/multiple-select.min.js"></script>
-    <link ref="stylesheet" href="~/lib/multiple-select/multiple-select.min.css" />
-    <script>
-        $("id-select-role").mul
-    </script>
-
-    
-
     <partial name="_ValidationScriptsPartial" />
 
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RAZOR_PAGE9_ENTITY.Models;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Admin.Pages
 {
     public class DeleteModel : RolePageModel
     {
-        public DeleteModel(RoleManager<IdentityRole> roleManager) : base(roleManager)
+        public DeleteModel(RoleManager<IdentityRole> roleManager, MyBlogContext context) : base(roleManager, context)
         {
         }
         public IdentityRole Role { get; set; }

@@ -20,8 +20,23 @@
                 <input type="submit" class="btn btn-primary" value="Cập nhật" />
                 <a class="btn btn-primary" asp-page="./Index">Danh sách các role</a>
             </div>
-            
         </form>
+        <hr />
+        <p>Các đặc tính của Role @Model.Input.Name: 
+            <a asp-page="./AddRoleClaims" asp-route-roleid ="@Model.Role.Id">+ Thêm Claims</a>
+        </p>
+        
+        @if(Model.RoleClaims.Count>0)
+        {
+           <ul>
+                @foreach (var claim in Model.RoleClaims)
+                {
+                    <li>
+                        <a asp-page="./EditRoleClaims" asp-route-claimid="@claim.Id">@claim.ClaimType : @claim.ClaimValue </a>
+                    </li>
+                }
+           </ul>
+        }
     </div>
 </div>
 @section Scripts {

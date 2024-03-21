@@ -12,6 +12,7 @@ using RAZOR_PAGE9_ENTITY.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace RAZOR_PAGE9_ENTITY
@@ -101,6 +102,27 @@ namespace RAZOR_PAGE9_ENTITY
                         options.AppSecret = config["AppSecret"];
                         options.CallbackPath = "/dang-nhap-bang-facebook";
                     });
+            // Policy-based authorization
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AllowEditRole", policybuilder =>
+                {
+                    //Thiết lập điều kiện cho Policy
+                    policybuilder.RequireAuthenticatedUser(); // Yêu cầu người dùng đăng nhập
+                    //policybuilder.RequireRole("Administrator"); //Người dùng phải có Role là Admin
+                    //policybuilder.RequireRole("VipProMember"); // Người dùng phải có Role là Editor
+
+                    policybuilder.RequireClaim("duocphepxoa", "post", "get");
+                    //Claim-based authorization
+                    //policybuilder.RequireClaim("Ten Claim", "Gia tri 1 cua claim", "Gia tri 2 cua Claim");
+                    //policybuilder.RequireClaim("Ten Claim 2", new string[] { "Gia tri 1 cua claim", "Gia tri 2 cua Claim" });
+
+                    //IdentityRoleClaim<string> claim1; -> tra ve tu DbContext
+                    //IdentityUserClaim<string> claim2; -> tra ve tu DbContext
+                    //Claim claim3;  -> tra ve tu dich vu Identity
+                    
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

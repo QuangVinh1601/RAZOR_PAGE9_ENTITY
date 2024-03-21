@@ -1,15 +1,19 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using RAZOR_PAGE9_ENTITY.Models;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace RAZOR_PAGE9_ENTITY.Areas.Admin.Pages
 {
-    public class EditModel : RolePageModel
+    [Authorize(Policy ="AllowEditRole")]
+    public class EditModel : RolePageModel  
     {
-        public EditModel(RoleManager<IdentityRole> roleManager) : base(roleManager)
+        public EditModel(RoleManager<IdentityRole> roleManager, MyBlogContext context) : base(roleManager, context)
         {
         }
         public class InputModel
@@ -22,6 +26,7 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Admin.Pages
         [BindProperty]
         public InputModel Input { get; set; }
         public IdentityRole Role { get; set; }
+        public List<IdentityRoleClaim<string>> RoleClaims { get; set; }
 
         public async Task<IActionResult> OnGet(string roleid)
         {
@@ -36,6 +41,7 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Admin.Pages
                 {
                     Name = Role.Name,
                 };
+                RoleClaims = _context.RoleClaims.Where(rc => rc.RoleId == Role.Id).ToList();
                 return Page();
             }
             return NotFound("Không tìm thấy role phù hợp");
@@ -48,11 +54,13 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Admin.Pages
                 return NotFound("Không tìm thấy Role ");
             }
             Role =  await _roleManager.FindByIdAsync(roleid);
-            if(Role == null)
+            if (Role == null)
             {
                 return NotFound("Không tìm thấy Role phù hợp");
             }
-            if (!ModelState.IsValid)
+            RoleClaims = _context.RoleClaims.Where(rc => rc.RoleId == Role.Id).ToList();
+
+            if (!ModelState.IsValid)    
             {
                 return Page();
             }
