@@ -13,9 +13,9 @@ namespace RAZOR_PAGE9_ENTITY.Pages_Blog
     [Authorize]
     public class IndexModel : PageModel
     {
-        private readonly RAZOR_PAGE9_ENTITY.Models.MyBlogContext _context;
+        private readonly RAZOR_PAGE9_ENTITY.Models.AppDbContext _context;
 
-        public IndexModel(RAZOR_PAGE9_ENTITY.Models.MyBlogContext context)
+        public IndexModel(RAZOR_PAGE9_ENTITY.Models.AppDbContext context)
         {
             _context = context;
         }

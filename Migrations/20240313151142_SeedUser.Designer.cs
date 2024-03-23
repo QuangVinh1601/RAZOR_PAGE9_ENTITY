@@ -9,7 +9,7 @@ using RAZOR_PAGE9_ENTITY.Models;
 
 namespace RAZOR_PAGE9_ENTITY.Migrations
 {
-    [DbContext(typeof(MyBlogContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20240313151142_SeedUser")]
     partial class SeedUser
     {

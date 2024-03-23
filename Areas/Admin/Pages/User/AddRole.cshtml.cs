@@ -18,11 +18,11 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Admin.Pages.User
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly MyBlogContext _context ;
+        private readonly AppDbContext _context ;
 
         public AddRoleModel(
             UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, MyBlogContext context)
+            SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager, AppDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;

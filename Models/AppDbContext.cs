@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RAZOR_PAGE9_ENTITY.Models
 {
-    public class MyBlogContext : IdentityDbContext<AppUser>
+    public class AppDbContext : IdentityDbContext<AppUser>
     {
         public DbSet<Article> articles { set; get; }
-        public MyBlogContext(DbContextOptions<MyBlogContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
 
         }

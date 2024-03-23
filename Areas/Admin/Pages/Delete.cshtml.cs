@@ -9,7 +9,7 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Admin.Pages
 {
     public class DeleteModel : RolePageModel
     {
-        public DeleteModel(RoleManager<IdentityRole> roleManager, MyBlogContext context) : base(roleManager, context)
+        public DeleteModel(RoleManager<IdentityRole> roleManager, AppDbContext context) : base(roleManager, context)
         {
         }
         public IdentityRole Role { get; set; }

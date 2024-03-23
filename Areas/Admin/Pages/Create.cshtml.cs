@@ -12,7 +12,7 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Admin.Pages
 {
     public class CreateModel : RolePageModel
     {
-        public CreateModel(RoleManager<IdentityRole> roleManager, MyBlogContext context) : base(roleManager,context)
+        public CreateModel(RoleManager<IdentityRole> roleManager, AppDbContext context) : base(roleManager,context)
         {
         }
 

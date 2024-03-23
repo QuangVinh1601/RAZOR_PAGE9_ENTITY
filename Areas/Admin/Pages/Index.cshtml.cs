@@ -14,7 +14,7 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Admin.Pages
     public class IndexModel : RolePageModel
     {
 
-        public IndexModel(RoleManager<IdentityRole> roleManager, MyBlogContext context) : base(roleManager, context)
+        public IndexModel(RoleManager<IdentityRole> roleManager, AppDbContext context) : base(roleManager, context)
         { 
         
         }

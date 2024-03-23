@@ -32,14 +32,14 @@ namespace RAZOR_PAGE9_ENTITY
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddDbContext<MyBlogContext>((options) =>
+            services.AddDbContext<AppDbContext>((options) =>
             {
                 string connectionString = Configuration.GetConnectionString("MyBlogContext");
                 options.UseSqlServer(connectionString);
             });
             //Dang ky Identity
             services.AddIdentity<AppUser, IdentityRole>()
-                    .AddEntityFrameworkStores<MyBlogContext>()
+                    .AddEntityFrameworkStores<AppDbContext>()
                     .AddDefaultTokenProviders();
 
             //services.AddDefaultIdentity<AppUser>() //them dich vu Identity vs cau hinh mac dinh cho AppUserModel

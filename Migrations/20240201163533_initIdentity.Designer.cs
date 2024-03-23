@@ -9,7 +9,7 @@ using RAZOR_PAGE9_ENTITY.Models;
 
 namespace RAZOR_PAGE9_ENTITY.Migrations
 {
-    [DbContext(typeof(MyBlogContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20240201163533_initIdentity")]
     partial class initIdentity
     {

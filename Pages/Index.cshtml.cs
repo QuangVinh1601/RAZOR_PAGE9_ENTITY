@@ -12,9 +12,9 @@ namespace RAZOR_PAGE9_ENTITY.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly MyBlogContext myBlogContext;
+        private readonly AppDbContext myBlogContext;
 
-        public IndexModel(ILogger<IndexModel> logger, MyBlogContext _myblogcontext)
+        public IndexModel(ILogger<IndexModel> logger, AppDbContext _myblogcontext)
         {
             _logger = logger;
             myBlogContext = _myblogcontext;

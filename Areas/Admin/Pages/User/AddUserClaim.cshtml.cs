@@ -12,9 +12,9 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Admin.Pages.User
 {
     public class AddUserClaimModel : PageModel
     {
-        private readonly MyBlogContext _context;
+        private readonly AppDbContext _context;
         private readonly UserManager<AppUser> _userManager;
-        public AddUserClaimModel(MyBlogContext context, UserManager<AppUser> userManager)
+        public AddUserClaimModel(AppDbContext context, UserManager<AppUser> userManager)
         {
             _context = context;
             _userManager = userManager;

@@ -8,7 +8,7 @@ using RAZOR_PAGE9_ENTITY.Models;
 
 namespace RAZOR_PAGE9_ENTITY.Migrations
 {
-    [DbContext(typeof(MyBlogContext))]
+    [DbContext(typeof(AppDbContext))]
     partial class MyBlogContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

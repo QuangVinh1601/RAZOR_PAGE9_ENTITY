@@ -13,7 +13,7 @@ namespace RAZOR_PAGE9_ENTITY.Areas.Admin.Pages
     [Authorize(Policy ="AllowEditRole")]
     public class EditModel : RolePageModel  
     {
-        public EditModel(RoleManager<IdentityRole> roleManager, MyBlogContext context) : base(roleManager, context)
+        public EditModel(RoleManager<IdentityRole> roleManager, AppDbContext context) : base(roleManager, context)
         {
         }
         public class InputModel
