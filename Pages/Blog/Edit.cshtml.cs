@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,10 +15,12 @@ namespace RAZOR_PAGE9_ENTITY.Pages_Blog
     public class EditModel : PageModel
     {
         private readonly RAZOR_PAGE9_ENTITY.Models.MyBlogContext _context;
+        private readonly IAuthorizationService _authorizationService;
 
-        public EditModel(RAZOR_PAGE9_ENTITY.Models.MyBlogContext context)
+        public EditModel(RAZOR_PAGE9_ENTITY.Models.MyBlogContext context, IAuthorizationService authorizationService)
         {
             _context = context;
+            _authorizationService = authorizationService;
         }
 
         [BindProperty]
@@ -51,7 +55,16 @@ namespace RAZOR_PAGE9_ENTITY.Pages_Blog
 
             try
             {
-                await _context.SaveChangesAsync();
+                //code xu ly xac thuc quyen cap nhat
+                var result =   await _authorizationService.AuthorizeAsync(this.User, Article,"CanUpdateArticle");
+                if(result.Succeeded)
+                {
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    return Content("Khong cap nhat duoc bai viet");
+                }
             }
             catch (DbUpdateConcurrencyException)
             {

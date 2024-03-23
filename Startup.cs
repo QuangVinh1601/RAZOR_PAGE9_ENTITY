@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RAZOR_PAGE9_ENTITY.Models;
+using RAZOR_PAGE9_ENTITY.Security;
 using RAZOR_PAGE9_ENTITY.Services;
 using System;
 using System.Collections.Generic;
@@ -122,7 +124,22 @@ namespace RAZOR_PAGE9_ENTITY
                     //Claim claim3;  -> tra ve tu dich vu Identity
                     
                 });
+                options.AddPolicy("InGenZ", policyBuilder =>
+                {
+                    policyBuilder.RequireAuthenticatedUser();
+                    policyBuilder.Requirements.Add(new GenZRequirement());
+                    //User, Requirement -> Authorization handler 
+                });
+                options.AddPolicy("AdminMenuDropdown", policyBuilder =>
+                {
+                    policyBuilder.RequireRole("Administrator");
+                });
+                options.AddPolicy("CanUpdateArticle", policyBuilder =>
+                {
+                    policyBuilder.Requirements.Add(new UpdateArticleRequirement());
+                });
             });
+            services.AddTransient<IAuthorizationHandler, AppAuthorizationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
